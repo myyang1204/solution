@@ -1,4 +1,4 @@
-makeCacheMatrix <- function(x = numeric()) {
+makeCacheMatrix <- function(x = matrix()) {
         m <- NULL
         set <- function(y) {
                 x <<- y
@@ -11,3 +11,15 @@ makeCacheMatrix <- function(x = numeric()) {
              setsolve = setsolve,
              getsolve = getsolve)
 }
+
+cacheSolve <- function(x, ...) {
+         m <- x$getsolve()
+         if(!is.null(m)) {
+                 message("getting cached data")
+                 return(m)
+         }
+         data <- x$get()
+         m <- solve(data, ...)
+         x$setsolve(m)
+         m
+ }
